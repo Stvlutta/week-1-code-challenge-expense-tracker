@@ -37,3 +37,13 @@ function ExpenseTable({ expenses, deleteExpense }) {
       }
     });
   }
+
+  // Show a message if no expenses
+  if (expenses.length === 0) {
+    return (
+      <div>
+        <h2>Expense List</h2>
+        <p>No expenses found. Add an expense using the form above.</p>
+      </div>
+    );
+  }
