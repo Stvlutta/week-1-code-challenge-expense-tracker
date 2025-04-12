@@ -47,3 +47,53 @@ function ExpenseTable({ expenses, deleteExpense }) {
       </div>
     );
   }
+
+  // Calculate total expenses
+  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+
+  return (
+    <div>
+      <h2>Expense List</h2>
+      <table className="expense-table">
+        <thead>
+          <tr>
+            <th onClick={() => handleSort('name')}>Name</th>
+            <th onClick={() => handleSort('date')}>Date</th>
+            <th onClick={() => handleSort('amount')}>Amount</th>
+            <th onClick={() => handleSort('category')}>Category</th>
+            <th onClick={() => handleSort('description')}>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedExpenses.map((expense, index) => (
+            <tr key={index}>
+              <td>{expense.name}</td>
+              <td>{expense.date}</td>
+              <td>KSh {expense.amount.toLocaleString('en-KE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+              <td>{expense.category}</td>
+              <td>{expense.description}</td>
+              <td>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteExpense(index)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="2"><strong>Total Expenses:</strong></td>
+            <td><strong>KSh {totalExpenses.toLocaleString('en-KE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td>
+            <td colSpan="3"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  );
+}
+
+export default ExpenseTable;
