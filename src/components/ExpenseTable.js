@@ -14,3 +14,26 @@ function ExpenseTable({ expenses, deleteExpense }) {
       setSortDirection('asc');
     }
   };
+
+  // Sort expenses if a sort field is selected
+  const sortedExpenses = [...expenses];
+  if (sortField) {
+    sortedExpenses.sort((a, b) => {
+      // Handle different data types
+      let valueA = a[sortField];
+      let valueB = b[sortField];
+      
+      // For string fields, use localeCompare
+      if (typeof valueA === 'string') {
+        const comparison = valueA.localeCompare(valueB);
+        return sortDirection === 'asc' ? comparison : -comparison;
+      }
+      
+      // For numbers and dates
+      if (sortDirection === 'asc') {
+        return valueA > valueB ? 1 : -1;
+      } else {
+        return valueA < valueB ? 1 : -1;
+      }
+    });
+  }
